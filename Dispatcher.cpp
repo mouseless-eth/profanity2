@@ -353,7 +353,7 @@ void Dispatcher::initContinue(Device & d) {
 		// the commands are not required to begin execution until the queue is flushed. In standard usage, blocking enqueue calls serve this role by implicitly
 		// flushing the queue. Since blocking calls are not permitted in callbacks, those callbacks that enqueue commands on a command queue should either call
 		// clFlush on the queue before returning or arrange for clFlush to be called later on another thread.
-		clFlush(d.m_clQueue); 
+		clFlush(d.m_clQueue);
 
 		std::lock_guard<std::mutex> lock(m_mutex);
 		d.m_sizeInitialized += sizeRun;
@@ -425,7 +425,7 @@ void Dispatcher::dispatch(Device & d) {
 	// We're actually not allowed to call clFinish here because this function is ultimately asynchronously called by OpenCL.
 	// However, this happens to work on my computer and it's not really intended for release, just something to aid me in
 	// optimizations.
-	clFinish(d.m_clQueue); 
+	clFinish(d.m_clQueue);
 	std::cout << "Timing: profanity_inverse = " << getKernelExecutionTimeMicros(eventInverse) << "us, profanity_iterate = " << getKernelExecutionTimeMicros(eventIterate) << "us" << std::endl;
 #endif
 
@@ -471,7 +471,7 @@ void Dispatcher::onEvent(cl_event event, cl_int status, Device & d) {
 		{
 			std::lock_guard<std::mutex> lock(m_mutex);
 			d.m_speed.sample(m_size);
-			printSpeed();
+			//printSpeed();
 
 			if( m_quit ) {
 				bDispatch = false;
